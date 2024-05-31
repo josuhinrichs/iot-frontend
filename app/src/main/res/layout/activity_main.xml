@@ -4,19 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#CACACA"
     android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout2"
         android:layout_width="match_parent"
-        android:layout_height="245dp"
+        android:layout_height="wrap_content"
         android:background="@color/primary"
         android:fitsSystemWindows="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="20sp">
 
             <Switch
                 android:id="@+id/switch1"
@@ -25,7 +27,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="44dp"
                 android:fontFamily="@font/roboto_bold"
-                android:text="ClimaSync"
+                android:text="Climasync"
                 android:textSize="28sp"
                 android:thumbTint="@color/secondary"
                 android:trackTint="@color/secondary"
@@ -44,26 +46,27 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/switch1" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <androidx.cardview.widget.CardView
+                android:layout_width="51dp"
+                android:layout_height="18dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginTop="8dp"
+                app:cardBackgroundColor="#FFF8DF"
+                app:cardCornerRadius="43dp"
+                app:cardElevation="0dp"
                 app:layout_constraintStart_toEndOf="@+id/textView2"
                 app:layout_constraintTop_toBottomOf="@+id/switch1">
 
                 <TextView
                     android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:fontFamily="@font/open_sans"
-                    android:text="  Online  "
+                    android:gravity="center"
+                    android:text="Online"
                     android:textColor="@color/green"
-                    android:textSize="10sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:layout_editor_absoluteY="0dp" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:textSize="10sp" />
+            </androidx.cardview.widget.CardView>
 
             <TextView
                 android:id="@+id/textView4"
@@ -89,7 +92,7 @@
                     android:id="@+id/layoutUmidade"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="76dp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     tools:layout_editor_absoluteY="0dp">
 
@@ -97,9 +100,9 @@
                         android:id="@+id/iconStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:tint="@color/black"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:srcCompat="@drawable/partly_cloudy_day_24px" />
+                        app:srcCompat="@drawable/partly_cloudy_day_24px"
+                        app:tint="@color/black" />
 
                     <TextView
                         android:id="@+id/textView5"
@@ -130,6 +133,7 @@
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginBottom="16dp"
+        android:visibility="gone"
         app:srcCompat="@android:drawable/ic_dialog_email" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
