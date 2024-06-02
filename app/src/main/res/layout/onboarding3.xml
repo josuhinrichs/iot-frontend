@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <?xml version="1.0" encoding="utf-8"?>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/primary"
+        android:backgroundTint="@color/primary"
+        tools:layout_editor_absoluteX="195dp"
+        tools:layout_editor_absoluteY="-235dp">
+
+        <Button
+            android:id="@+id/button8"
+            android:layout_width="135dp"
+            android:layout_height="59dp"
+            android:backgroundTint="@color/secondary"
+            android:fontFamily="@font/open_sans"
+            android:text="Continuar"
+            android:textSize="18sp"
+            tools:layout_editor_absoluteX="138dp"
+            tools:layout_editor_absoluteY="580dp" />
+
+        <Button
+            android:id="@+id/button7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:fontFamily="@font/open_sans"
+            android:text="Voltar"
+            android:textSize="18sp"
+            tools:layout_editor_absoluteX="156dp"
+            tools:layout_editor_absoluteY="639dp" />
+
+        <TextView
+            android:id="@+id/textView27"
+            android:layout_width="367dp"
+            android:layout_height="154dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginBottom="224dp"
+            android:fontFamily="@font/open_sans"
+            android:text="Precisamos do seu endereço para obter informações climáticas"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/button8"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textView41"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans"
+            android:text="Vamos começar!"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="89dp"
+            tools:layout_editor_absoluteY="146dp" />
+
+
+        <TextView
+            android:id="@+id/textView40"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans"
+            android:text="Digite seu CEP"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="145dp"
+            tools:layout_editor_absoluteY="276dp" />
+
+        <EditText
+            android:id="@+id/editTextNumberDecimal"
+            android:layout_width="77dp"
+            android:layout_height="28dp"
+            android:background="@color/white"
+            android:backgroundTint="@color/white"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            tools:layout_editor_absoluteX="167dp"
+            tools:layout_editor_absoluteY="312dp" />
+
+
+        <TextView
+            android:id="@+id/textView42"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans"
+            android:text="ou"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="194dp"
+            tools:layout_editor_absoluteY="353dp" />
+
+        <Button
+            android:id="@+id/button9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:backgroundTint="@color/secondary"
+            android:fontFamily="@font/open_sans"
+            android:text="Buscar localização"
+            android:textColor="@color/secondary"
+            android:textSize="16sp"
+            app:icon="@drawable/settings_24px"
+            app:iconTint="@color/secondary"
+            tools:layout_editor_absoluteX="99dp"
+            tools:layout_editor_absoluteY="378dp" />
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans"
+            android:text="Rua Gustavo Sampaio"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            tools:layout_editor_absoluteX="124dp"
+            tools:layout_editor_absoluteY="438dp" />
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans"
+            android:text="Parquelândia, Fortaleza - CE"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            tools:layout_editor_absoluteX="102dp"
+            tools:layout_editor_absoluteY="460dp" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
