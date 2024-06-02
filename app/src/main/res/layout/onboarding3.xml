@@ -13,7 +13,6 @@
         android:backgroundTint="@color/primary"
         tools:layout_editor_absoluteX="195dp"
         tools:layout_editor_absoluteY="-235dp">
-
         <Button
             android:id="@+id/button8"
             android:layout_width="135dp"
@@ -24,7 +23,6 @@
             android:textSize="18sp"
             tools:layout_editor_absoluteX="138dp"
             tools:layout_editor_absoluteY="580dp" />
-
         <Button
             android:id="@+id/button7"
             android:layout_width="wrap_content"
