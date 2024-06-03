@@ -20,20 +20,21 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="20sp">
 
-            <Switch
+            <com.google.android.material.materialswitch.MaterialSwitch
                 android:id="@+id/switch1"
-                android:layout_width="199dp"
-                android:layout_height="48dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="44dp"
+                android:checked="true"
                 android:fontFamily="@font/roboto_bold"
                 android:text="Climasync"
+                android:textColorLink="#2196F3"
                 android:textSize="28sp"
-                android:thumbTint="@color/secondary"
-                android:trackTint="@color/secondary"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:checked="true" />
+                app:thumbIconTint="#00BCD4"
+                app:trackTint="@color/switch_thumb_color" />
 
             <TextView
                 android:id="@+id/textView2"
@@ -119,6 +120,18 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageButton
+                android:id="@+id/dexAlertaBtn"
+                android:layout_width="60dp"
+                android:layout_height="56dp"
+                android:layout_marginTop="46dp"
+                android:layout_marginEnd="16dp"
+                android:backgroundTint="@color/white"
+                app:tint="@color/secondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/notifications_active_24px" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
