@@ -1,9 +1,18 @@
 package client;
-public class BaseClient extends DefaultHttpClient{
+
+
+import android.content.Context;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+
+public class BaseClient {
     public String baseURL;
+    public RequestQueue queue;
     
-    BaseClient(){
-        this.baseURL = "http://localhost:9000"; // TODO: colocar como env
+    BaseClient(Context context){
+        this.baseURL = "http://localhost:9000"; // TODO: ver melhor forma de colocar esse endereço
+        this.queue = Volley.newRequestQueue(context);
     }
 
 }
