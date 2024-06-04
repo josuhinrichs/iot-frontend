@@ -3,64 +3,86 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/primary"
+    android:backgroundTint="@color/primary">
 
-    <?xml version="1.0" encoding="utf-8"?>
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/primary"
-        android:backgroundTint="@color/primary">
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="135dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="138dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="138dp"
+        android:backgroundTint="@color/secondary"
+        android:fontFamily="@font/open_sans"
+        android:text="Continuar"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView27" />
 
-        <Button
-            android:id="@+id/button8"
-            android:layout_width="135dp"
-            android:layout_height="59dp"
-            android:backgroundTint="@color/secondary"
-            android:fontFamily="@font/open_sans"
-            android:text="Continuar"
-            android:textSize="18sp"
-            tools:layout_editor_absoluteX="138dp"
-            tools:layout_editor_absoluteY="580dp" />
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="156dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="157dp"
+        android:background="#00FFFFFF"
+        android:fontFamily="@font/open_sans"
+        android:text="Voltar"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button8" />
 
-        <Button
-            android:id="@+id/button7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#00FFFFFF"
-            android:fontFamily="@font/open_sans"
-            android:text="Voltar"
-            android:textSize="18sp"
-            tools:layout_editor_absoluteX="156dp"
-            tools:layout_editor_absoluteY="639dp" />
+    <TextView
+        android:id="@+id/textView27"
+        android:layout_width="367dp"
+        android:layout_height="154dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="60dp"
+        android:fontFamily="@font/open_sans"
+        android:text="Com o Climasync, gerenciamos de forma inteligente o seu ambiente interno, ajustando-se automaticamente às condições de temperatura e umidade."
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView41" />
 
-        <TextView
-            android:id="@+id/textView27"
-            android:layout_width="367dp"
-            android:layout_height="154dp"
-            android:layout_marginStart="60dp"
-            android:layout_marginEnd="60dp"
-            android:layout_marginBottom="60dp"
-            android:fontFamily="@font/open_sans"
-            android:text="Com o Climão, gerenciamos de forma inteligente o seu ambiente interno, ajustando-se automaticamente às condições de temperatura e umidade."
-            android:textAlignment="center"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/button8"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+    <TextView
+        android:id="@+id/textView41"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="23dp"
+        android:layout_marginEnd="56dp"
+        android:fontFamily="@font/open_sans"
+        android:text="Menos preocupações"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
-        <TextView
-            android:id="@+id/textView41"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans"
-            android:text="Menos preocupações"
-            android:textColor="@color/black"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            tools:layout_editor_absoluteX="55dp"
-            tools:layout_editor_absoluteY="299dp" />
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="241dp"
+        android:layout_height="266dp"
+        android:layout_marginStart="85dp"
+        android:layout_marginTop="110dp"
+        android:layout_marginEnd="85dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/guardachuvamulher" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

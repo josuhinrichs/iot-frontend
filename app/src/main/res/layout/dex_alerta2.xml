@@ -6,240 +6,341 @@
     android:layout_height="match_parent"
     android:background="@color/background">
 
-    <TextView
-        android:id="@+id/textView36"
-        android:layout_width="360dp"
-        android:layout_height="53dp"
-        android:background="@color/gray"
-        android:fontFamily="@font/open_sans"
-        tools:layout_editor_absoluteX="24dp"
-        tools:layout_editor_absoluteY="540dp" />
 
-    <TextView
-        android:id="@+id/textView34"
-        android:layout_width="359dp"
-        android:layout_height="93dp"
-        android:background="@color/gray"
-        android:fontFamily="@font/open_sans"
-        tools:layout_editor_absoluteX="25dp"
-        tools:layout_editor_absoluteY="437dp" />
-
-    <TextView
-        android:id="@+id/textView32"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans"
-        android:text="Alerta de calor"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        tools:layout_editor_absoluteX="34dp"
-        tools:layout_editor_absoluteY="449dp" />
-
-    <TextView
-        android:id="@+id/textView31"
-        android:layout_width="359dp"
-        android:layout_height="93dp"
-        android:background="@color/gray"
-        android:fontFamily="@font/open_sans"
-        tools:layout_editor_absoluteX="26dp"
-        tools:layout_editor_absoluteY="335dp" />
-
-    <TextView
-        android:id="@+id/textView28"
-        android:layout_width="359dp"
-        android:layout_height="93dp"
-        android:background="@color/gray"
-        android:fontFamily="@font/open_sans"
-        tools:layout_editor_absoluteX="26dp"
-        tools:layout_editor_absoluteY="233dp" />
-
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="55dp"
-        android:layout_height="43dp"
-        android:backgroundTint="#00202020"
-        android:textColorLink="@color/background"
-        app:icon="@drawable/baseline_arrow_back_24"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="40dp" />
-
-    <TextView
-        android:id="@+id/textView19"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans"
-        android:text="DexAlerta"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        tools:layout_editor_absoluteX="26dp"
-        tools:layout_editor_absoluteY="91dp" />
-
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="81dp"
-        android:layout_height="19dp"
-        android:layout_weight="1"
-        android:backgroundTint="#4C2727"
-        android:drawableTint="#DFB5B5"
-        android:fontFamily="@font/open_sans"
-        android:text="Tela inicial"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        tools:layout_editor_absoluteX="56dp"
-        tools:layout_editor_absoluteY="50dp" />
-
-
-    <TextView
-        android:id="@+id/textView20"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="96dp"
-        android:layout_marginEnd="24dp"
-        android:fontFamily="@font/open_sans"
-        android:text="Editar"
-        android:textColor="@color/primary"
-        android:textSize="16sp"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="370dp"
+        android:layout_height="98dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="9dp"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:paddingHorizontal="0dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/textView15"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/button5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00202020"
+                android:paddingHorizontal="0dp"
+                android:paddingVertical="0dp"
+                android:text="Tela inicial"
+                android:textColorLink="@color/background"
+                android:textSize="20sp"
+                app:icon="@drawable/baseline_arrow_back_24" />
+
+            <TextView
+                android:id="@+id/textView19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:text="DexAlerta"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/button12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:drawableLeft="@drawable/edit_24px"
+            android:drawableTint="@color/primary"
+            android:text="Editar"
+            android:textColor="@color/primary"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans"
-        android:text="Rua Gustavo Sampaio"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        tools:layout_editor_absoluteX="26dp"
-        tools:layout_editor_absoluteY="151dp" />
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="168dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
-    <TextView
-        android:id="@+id/textView16"
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans"
+            android:text="Rua Gustavo Sampaio"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans"
+            android:text="Parquelândia, Fortaleza - CE"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans"
-        android:text="Parquelândia, Fortaleza - CE"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        tools:layout_editor_absoluteX="26dp"
-        tools:layout_editor_absoluteY="173dp" />
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="vertical"
+        android:paddingHorizontal="0dp"
+        android:paddingVertical="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
 
-    <TextView
-        android:id="@+id/textView23"
-        android:layout_width="360dp"
-        android:layout_height="53dp"
-        android:background="@color/gray"
-        android:fontFamily="@font/open_sans"
-        tools:layout_editor_absoluteX="25dp"
-        tools:layout_editor_absoluteY="604dp" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="362dp"
+            android:layout_height="80dp"
+            android:layout_marginEnd="25dp"
+            android:background="@color/gray">
 
-    <Switch
-        android:id="@+id/switch7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="325dp"
-        tools:layout_editor_absoluteY="245dp" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/textView24"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans"
-        android:text="Alerta de hidratação"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        tools:layout_editor_absoluteX="34dp"
-        tools:layout_editor_absoluteY="253dp" />
+                <TextView
+                    android:id="@+id/textView240"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="Alerta de hidratação"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/textView26"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans"
-        android:text="5 vezes ao dia"
-        android:textColor="@color/primary"
-        tools:layout_editor_absoluteX="35dp"
-        tools:layout_editor_absoluteY="288dp" />
+                <TextView
+                    android:id="@+id/textView2a6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="5 vezes ao dia"
+                    android:textColor="@color/primary" />
+            </LinearLayout>
 
-    <Switch
-        android:id="@+id/switch10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="325dp"
-        tools:layout_editor_absoluteY="345dp" />
+            <Switch
+                android:id="@+id/switch07"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:layout_editor_absoluteY="16dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/textView30"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans"
-        android:text="Alerta de frio"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        tools:layout_editor_absoluteX="35dp"
-        tools:layout_editor_absoluteY="348dp" />
+        <Space
+            android:id="@+id/padaaaaaaadin"
+            android:layout_width="match_parent"
+            android:layout_height="18dp" />
 
-    <TextView
-        android:id="@+id/textView25"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans"
-        android:text="20C ou menos"
-        android:textColor="@color/primary"
-        tools:layout_editor_absoluteX="35dp"
-        tools:layout_editor_absoluteY="381dp" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="362dp"
+            android:layout_height="80dp"
+            android:layout_marginEnd="25dp"
+            android:background="@color/gray">
 
-    <Switch
-        android:id="@+id/switch11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="325dp"
-        tools:layout_editor_absoluteY="452dp" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/textView33"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans"
-        android:text="35C ou mais"
-        android:textColor="@color/primary"
-        tools:layout_editor_absoluteX="35dp"
-        tools:layout_editor_absoluteY="487dp" />
+                <TextView
+                    android:id="@+id/textView24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="Alerta de frio"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
 
-    <Switch
-        android:id="@+id/switch12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="325dp"
-        tools:layout_editor_absoluteY="555dp" />
+                <TextView
+                    android:id="@+id/textView26"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="20°C ou menos"
+                    android:textColor="@color/primary" />
+            </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView35"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans"
-        android:text="Alerta de chuva"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        tools:layout_editor_absoluteX="35dp"
-        tools:layout_editor_absoluteY="555dp" />
+            <Switch
+                android:id="@+id/switch7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:layout_editor_absoluteY="16dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Switch
-        android:id="@+id/switch13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="325dp"
-        tools:layout_editor_absoluteY="615dp" />
+        <Space
+            android:id="@+id/paddaaaaaain"
+            android:layout_width="match_parent"
+            android:layout_height="18dp" />
 
-    <TextView
-        android:id="@+id/textView37"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans"
-        android:text="Alerta de sol"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        tools:layout_editor_absoluteX="35dp"
-        tools:layout_editor_absoluteY="624dp" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="362dp"
+            android:layout_height="80dp"
+            android:layout_marginEnd="25dp"
+            android:background="@color/gray">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/textView024"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="Alerta de calor"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/textView226"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="35°C ou mais"
+                    android:textColor="@color/primary" />
+            </LinearLayout>
+
+            <Switch
+                android:id="@+id/switch722"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:layout_editor_absoluteY="16dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Space
+            android:id="@+id/paddina"
+            android:layout_width="match_parent"
+            android:layout_height="18dp" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="362dp"
+            android:layout_height="80dp"
+            android:layout_marginEnd="25dp"
+            android:background="@color/gray">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/textView0224"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="Alerta de chuva"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <Switch
+                android:id="@+id/switch792"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:layout_editor_absoluteY="16dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Space
+            android:id="@+id/paddin"
+            android:layout_width="match_parent"
+            android:layout_height="18dp" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="362dp"
+            android:layout_height="80dp"
+            android:background="@color/gray"
+            android:paddingHorizontal="0dp"
+            android:paddingVertical="0dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/textView02o4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="Alerta de sol"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <Switch
+                android:id="@+id/switch752"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:layout_editor_absoluteY="16dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
