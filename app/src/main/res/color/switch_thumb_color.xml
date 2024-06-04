@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/secondary" android:state_checked="true"/> <!-- Color when switch is on -->
+    <item android:color="@color/switch_disabled"/> <!-- Default color (when switch is off) -->
+</selector>

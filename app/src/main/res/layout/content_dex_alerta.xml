@@ -3,28 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/dex_alerta_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_wrapBehaviorInParent="horizontal_only">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout1"
         android:layout_width="362dp"
         android:layout_height="166dp"
         android:layout_marginTop="24dp"
-        android:background="@color/gray"
+        android:background="@drawable/border_radius"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
-        <Switch
+        <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/switch8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:trackTint="@color/switch_thumb_color" />
 
         <SeekBar
             android:id="@+id/seekBar3"
@@ -59,7 +60,7 @@
             android:layout_marginStart="14dp"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="44dp">
+            app:layout_constraintTop_toBottomOf="@+id/textView21">
 
             <EditText
                 android:id="@+id/editTextNumber4"
@@ -91,20 +92,20 @@
         android:layout_width="362dp"
         android:layout_height="166dp"
         android:layout_marginTop="24dp"
-        android:background="@color/gray"
+        android:background="@drawable/border_radius"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout1">
 
-        <Switch
+        <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/switch9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:trackTint="@color/switch_thumb_color" />
 
         <SeekBar
             android:id="@+id/seekBar4"
@@ -139,7 +140,7 @@
             android:layout_marginStart="14dp"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="44dp">
+            app:layout_constraintTop_toBottomOf="@+id/textView25">
 
             <EditText
                 android:id="@+id/editTextNumber8"
@@ -171,13 +172,13 @@
         android:layout_width="362dp"
         android:layout_height="166dp"
         android:layout_marginTop="24dp"
-        android:background="@color/gray"
+        android:background="@drawable/border_radius"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView17"
+            android:id="@+id/textView179"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
@@ -190,14 +191,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
-            android:id="@+id/linearLayout4"
+            android:id="@+id/linearLayout41"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
             android:layout_marginTop="8dp"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView17">
+            app:layout_constraintTop_toBottomOf="@+id/textView179">
 
             <EditText
                 android:id="@+id/editTextNumber"
@@ -233,16 +234,16 @@
             android:progressTint="@color/primary"
             android:thumbTint="@color/primary"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout41" />
 
-        <Switch
-            android:id="@+id/switch6"
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/switch68"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:trackTint="@color/switch_thumb_color" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -251,16 +252,17 @@
         android:layout_width="362dp"
         android:layout_height="50dp"
         android:layout_marginTop="24dp"
-        android:background="@color/gray"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
-        tools:layout_editor_absoluteX="24dp">
+        android:background="@drawable/border_radius"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
 
         <TextView
             android:id="@+id/textView17"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/open_sans_semibold"
             android:text="Alerta de chuva"
             android:textColor="@color/white"
@@ -268,14 +270,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Switch
+        <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/switch6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:trackTint="@color/switch_thumb_color" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -284,16 +286,17 @@
         android:layout_width="362dp"
         android:layout_height="50dp"
         android:layout_marginTop="24dp"
-        android:background="@color/gray"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
-        tools:layout_editor_absoluteX="24dp">
+        android:background="@drawable/border_radius"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
 
         <TextView
-            android:id="@+id/textView17"
+            android:id="@+id/textView172"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/open_sans_semibold"
             android:text="Alerta de sol"
             android:textColor="@color/white"
@@ -301,14 +304,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Switch
-            android:id="@+id/switch6"
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/switch61"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:trackTint="@color/switch_thumb_color" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -316,8 +319,11 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="12dp"
         android:background="#00FFFFFF"
+        android:paddingHorizontal="0dp"
+        android:paddingBottom="200dp"
         android:text="Restaurar padrões"
         android:textColor="@color/terciary"
         app:layout_constraintStart_toStartOf="parent"
