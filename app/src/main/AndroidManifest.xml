@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -16,21 +16,27 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Climao"
         tools:targetApi="31">
+        <activity
+            android:name=".DexAlertaConfiguracoes"
+            android:exported="false" />
         <activity android:name=".DexAlertaActivity" />
-        <activity android:name=".MainActivity"
-            android:theme="@style/Theme.Climao"
-            android:exported="true">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Climao">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCa-m0UKLIdGryL_PBTJvn4n3l1sL9YDi8"/>
+            android:value="AIzaSyCa-m0UKLIdGryL_PBTJvn4n3l1sL9YDi8" />
     </application>
 
 </manifest>

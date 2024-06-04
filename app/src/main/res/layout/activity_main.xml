@@ -24,7 +24,7 @@
                 android:id="@+id/switch1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="24dp"
                 android:layout_marginTop="44dp"
                 android:checked="true"
                 android:fontFamily="@font/roboto_bold"
@@ -40,7 +40,7 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="24dp"
                 android:fontFamily="@font/poppins_medium"
                 android:text="DexHome"
                 android:textSize="20sp"
@@ -123,15 +123,16 @@
 
             <ImageButton
                 android:id="@+id/dexAlertaBtn"
-                android:layout_width="60dp"
-                android:layout_height="56dp"
-                android:layout_marginTop="46dp"
-                android:layout_marginEnd="16dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="56dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/border_radius"
                 android:backgroundTint="@color/white"
-                app:tint="@color/secondary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/notifications_active_24px" />
+                app:srcCompat="@drawable/notifications_active_24px"
+                app:tint="@color/secondary" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

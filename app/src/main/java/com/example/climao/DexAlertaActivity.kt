@@ -78,12 +78,20 @@ class DexAlertaActivity : AppCompatActivity() {
                     // Atualize os TextViews com os detalhes do endereço
                     binding.enderecoRua.text = address.thoroughfare
                     binding.endereco.text = buildAddressString(address)
+                    binding.cepInput.setText(address.postalCode)
+
                 }
             }
         }
     }
 
     private suspend fun getAddressFromLocation(latitude: Double, longitude: Double): Address {
+        val geocoder = Geocoder(this, Locale.getDefault())
+        val addresses = geocoder.getFromLocation(latitude, longitude, 1)
+        return addresses!![0]
+    }
+
+    private suspend fun getPostalCodeFromLocation(latitude: Double, longitude: Double): Address {
         val geocoder = Geocoder(this, Locale.getDefault())
         val addresses = geocoder.getFromLocation(latitude, longitude, 1)
         return addresses!![0]

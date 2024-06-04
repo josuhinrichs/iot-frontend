@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         // Set up the button click listener
         binding.dexAlertaBtn.setOnClickListener {
             // Create an Intent to start DexAlertaActivity
-            val intent = Intent(this, DexAlertaActivity::class.java)
+            val intent = Intent(this, DexAlertaConfiguracoes::class.java)
             startActivity(intent)
         }
     }
