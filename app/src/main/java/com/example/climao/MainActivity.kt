@@ -14,12 +14,13 @@ import androidx.core.app.ActivityCompat
 import kotlinx.coroutines.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.serialization.ExperimentalSerializationApi
 import models.weather.WeatherResponse
 
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.decodeFromString
 
-
+@kotlinx.serialization.ExperimentalSerializationApi
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -60,6 +61,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @kotlinx.serialization.ExperimentalSerializationApi
     private fun fetchLocation() {
         if (ActivityCompat.checkSelfPermission(
                 this,
@@ -79,35 +81,43 @@ class MainActivity : AppCompatActivity() {
             // Verifique se a localização é válida
             if (location != null) {
                 // Obtenha os detalhes do endereço da localização atual
-                GlobalScope.launch(Dispatchers.Main) {
-                    getWeatherInfo(location.latitude, location.longitude)
-                }
+                getWeatherInfo(location.latitude, location.longitude)
+
             }else{
-               binding.textView4.text = ""
+                binding.textView4.text = ""
                 binding.textView5.text = "Localização não encontrada"
             }
         }
     }
+    @kotlinx.serialization.ExperimentalSerializationApi
     private fun getWeatherInfo(latitude:Double, longitude:Double ){
 
         val service = Retrofit.Builder()
             .baseUrl("http://10.0.2.2:5000/") //TODO: alterar URL
             .build().create(WeatherClient::class.java)
 
-        runBlocking {
-            withContext(Dispatchers.Default) {
-                    val response = service.getWeatherInfo(latitude!!, longitude!!)
-                    if (response.isSuccessful) {
-                        val responseFormatted = Json.decodeFromString<WeatherResponse>(response.body()?.string()!!)
-                        binding.textView4.text = responseFormatted.results.temp.toString()
 
+        GlobalScope.launch(Dispatchers.IO) {
+            withContext(Dispatchers.Default) {
+                    val response = service.getWeatherInfo(latitude, longitude)
+                    if (response.isSuccessful) {
+                        val body = response.body()?.string()!!
+                        Log.d("RESPONSE", body)
+                        val responseFormatted = Json.decodeFromString<WeatherResponse>(body)
+
+                        withContext(Dispatchers.Main) {
+                            binding.textView4.text =
+                                responseFormatted.results.temp.toString() + "ºC"
+                            binding.textView5.text = responseFormatted.results.description
+                        }
                         Log.d("TEST",responseFormatted.toString())
 
+                    }
             }
+
         }
 
-
-    }}
+    }
 
 
 
