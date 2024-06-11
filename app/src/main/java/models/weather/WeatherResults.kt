@@ -1,6 +1,5 @@
 package models.weather
 import kotlinx.serialization.Serializable
-import models.weather.Forecast
 
 @Serializable
 data class Results(
