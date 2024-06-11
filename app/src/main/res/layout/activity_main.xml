@@ -71,9 +71,8 @@
 
             <TextView
                 android:id="@+id/textView4"
-                android:layout_width="153dp"
+                android:layout_width="wrap_content"
                 android:layout_height="79dp"
-                android:layout_marginStart="128dp"
                 android:layout_marginTop="124dp"
                 android:backgroundTint="@color/black"
                 android:fontFamily="@font/poppins_bold"
@@ -81,6 +80,7 @@
                 android:textColor="@color/black"
                 android:textSize="64dp"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
