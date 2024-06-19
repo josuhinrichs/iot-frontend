@@ -24,9 +24,14 @@ import models.tuya.StatusResponse
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-
+    private lateinit var backClient: BackClient
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        backClient = Retrofit.Builder()
+            .baseUrl("https://climasync-4ibw.onrender.com/")
+            .build().create(BackClient::class.java)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -92,15 +97,9 @@ class MainActivity : AppCompatActivity() {
     }
     @kotlinx.serialization.ExperimentalSerializationApi
     private fun getWeatherInfo(latitude:Double, longitude:Double ){
-
-        val service = Retrofit.Builder()
-            .baseUrl("https://climasync-4ibw.onrender.com/") //TODO: alterar URL
-            .build().create(BackClient::class.java)
-
-
         GlobalScope.launch(Dispatchers.IO) {
             withContext(Dispatchers.Default) {
-                    val response = service.getWeatherInfo(latitude, longitude)
+                    val response = backClient.getWeatherInfo(latitude, longitude)
                     if (response.isSuccessful) {
                         val body = response.body()?.string()!!
                         Log.d("RESPONSE", body)
@@ -121,15 +120,10 @@ class MainActivity : AppCompatActivity() {
 
     @kotlinx.serialization.ExperimentalSerializationApi
     private fun fetchDeviceStatus(){
-
-        val service = Retrofit.Builder()
-            .baseUrl("https://climasync-4ibw.onrender.com/")
-            .build().create(BackClient::class.java)
-
         GlobalScope.launch(Dispatchers.IO) {
             withContext(Dispatchers.Default) {
                 //TODO: device id como env
-                val response = service.getDeviceStatus("vdevo171874684507405")
+                val response = backClient.getDeviceStatus("vdevo171874684507405")
                 if (response.isSuccessful) {
                     val body = response.body()?.string()!!
                     Log.d("RESPONSE", body)
