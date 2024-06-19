@@ -5,7 +5,7 @@ import com.example.climao.databinding.ActivityMainBinding
 import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
-import client.WeatherClient
+import client.BackClient
 import kotlinx.coroutines.Dispatchers
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -14,11 +14,11 @@ import androidx.core.app.ActivityCompat
 import kotlinx.coroutines.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.serialization.ExperimentalSerializationApi
 import models.weather.WeatherResponse
 
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.decodeFromString
+import models.tuya.StatusResponse
 
 @kotlinx.serialization.ExperimentalSerializationApi
 class MainActivity : AppCompatActivity() {
@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         fetchLocation()
+        fetchDeviceStatus()
 
         // Set up the button click listener
         binding.dexAlertaBtn.setOnClickListener {
@@ -110,7 +111,6 @@ class MainActivity : AppCompatActivity() {
                                 responseFormatted.results.temp.toString() + "ºC"
                             binding.textView5.text = responseFormatted.results.description
                         }
-                        Log.d("TEST",responseFormatted.toString())
 
                     }
             }
@@ -119,6 +119,34 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    @kotlinx.serialization.ExperimentalSerializationApi
+    private fun fetchDeviceStatus(){
+
+        val service = Retrofit.Builder()
+            .baseUrl("https://climasync-4ibw.onrender.com/")
+            .build().create(BackClient::class.java)
+
+        GlobalScope.launch(Dispatchers.IO) {
+            withContext(Dispatchers.Default) {
+                //TODO: device id como env
+                val response = service.getDeviceStatus("vdevo171874684507405")
+                if (response.isSuccessful) {
+                    val body = response.body()?.string()!!
+                    Log.d("RESPONSE", body)
+                    val responseFormatted = Json.decodeFromString<StatusResponse>(body)
+
+                    withContext(Dispatchers.Main) {
+                        // TODO: alterar textos da tomada
+                        // TODO: alterar posição do switch
+
+                    }
+
+                }
+            }
+
+        }
+
+    }
 
 
 }
