@@ -93,8 +93,8 @@ class MainActivity : AppCompatActivity() {
     private fun getWeatherInfo(latitude:Double, longitude:Double ){
 
         val service = Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:5000/") //TODO: alterar URL
-            .build().create(WeatherClient::class.java)
+            .baseUrl("https://climasync-4ibw.onrender.com/") //TODO: alterar URL
+            .build().create(BackClient::class.java)
 
 
         GlobalScope.launch(Dispatchers.IO) {
