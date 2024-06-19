@@ -3,6 +3,7 @@ import retrofit2.Retrofit
 import android.os.Bundle
 import com.example.climao.databinding.ActivityMainBinding
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import client.WeatherClient
@@ -14,6 +15,7 @@ import androidx.core.app.ActivityCompat
 import kotlinx.coroutines.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.serialization.ExperimentalSerializationApi
 import models.weather.WeatherResponse
 
 import kotlinx.serialization.json.Json
@@ -27,6 +29,18 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+
+        // Check if onboarding is complete
+        val sharedPreferences: SharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE)
+        val isOnboardingCompleted = sharedPreferences.getBoolean("isOnboardingCompleted", false)
+
+        if (!isOnboardingCompleted) {
+            // Start OnboardingActivity
+            startActivity(Intent(this, OnboardingActivity::class.java))
+            finish()
+            return
+        }
+
         setContentView(binding.root)
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
