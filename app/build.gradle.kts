@@ -63,4 +63,5 @@ dependencies {
     implementation("com.google.android.gms:play-services-maps:18.0.2")
     implementation("me.relex:circleindicator:2.1.6")
     implementation("androidx.viewpager2:viewpager2:1.0.0")
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
 }
