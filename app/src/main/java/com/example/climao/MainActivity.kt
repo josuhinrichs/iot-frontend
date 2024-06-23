@@ -32,8 +32,12 @@ import models.weather.WeatherResponse
 
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.decodeFromString
+import models.client.User
 import models.tuya.StatusResponse
+import org.json.JSONObject
 import kotlin.properties.Delegates
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
 
 @kotlinx.serialization.ExperimentalSerializationApi
 class MainActivity : AppCompatActivity() {
@@ -42,6 +46,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var backClient: BackClient
     private lateinit var pushToken: String
     private var temperature: Int = 30
+    private lateinit var user: User
 
     private val _nowTemperature = MutableLiveData<Int>(30)
     val nowTemperature: LiveData<Int> get() = _nowTemperature
@@ -70,10 +75,9 @@ class MainActivity : AppCompatActivity() {
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         askNotificationPermission()
+        getUserInfo()
         fetchLocation()
         fetchDeviceStatus()
-        //fetchLocation()
-
         //updateTemperatureColor(39) // TODO: INTEGRAR COM CHECAGEM DE CLIMA
 
         val climasyncSwitch = binding.climasyncSwitch
@@ -98,7 +102,29 @@ class MainActivity : AppCompatActivity() {
             onMyVariableChanged(newValue)
         })
     }
+    private fun getUserInfo(){
+        val jsonObject = JSONObject()
+        jsonObject.put("firebase_token", pushToken)
 
+        val jsonObjectString = jsonObject.toString()
+        val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+
+        GlobalScope.launch(Dispatchers.IO) {
+            withContext(Dispatchers.Default) {
+                val response = backClient.getUser(requestBody)
+                if (response.isSuccessful) {
+                    val body = response.body()?.string()!!
+                    Log.d("REQUEST_RESPONSE", body)
+                    val responseFormatted = Json.decodeFromString<User>(body)
+
+                    withContext(Dispatchers.Main) {
+                        user = responseFormatted
+                    }
+
+                }
+            }
+        }
+    }
     private fun onMyVariableChanged(newValue: Int?) {
         // Determine the color based on temperature
         val weatherRectangle = binding.weatherRectangle
@@ -170,12 +196,14 @@ class MainActivity : AppCompatActivity() {
     }
     @kotlinx.serialization.ExperimentalSerializationApi
     private fun getWeatherInfo(latitude:Double, longitude:Double ){
+        
         GlobalScope.launch(Dispatchers.IO) {
             withContext(Dispatchers.Default) {
                     val response = backClient.getWeatherInfo(latitude, longitude)
+                Log.d("DEBUG", "CHEGOU NA REQUISIÇÃO DO CLIMA")
                     if (response.isSuccessful) {
                         val body = response.body()?.string()!!
-                        Log.d("RESPONSE", body)
+                        Log.d("REQUEST_RESPONSE", body)
                         val responseFormatted = Json.decodeFromString<WeatherResponse>(body)
 
                         withContext(Dispatchers.Main) {
@@ -191,8 +219,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
-
     }
 
     @kotlinx.serialization.ExperimentalSerializationApi
@@ -203,7 +229,7 @@ class MainActivity : AppCompatActivity() {
                 val response = backClient.getDeviceStatus("vdevo171874684507405")
                 if (response.isSuccessful) {
                     val body = response.body()?.string()!!
-                    Log.d("RESPONSE", body)
+                    Log.d("REQUEST_RESPONSE", body)
                     val responseFormatted = Json.decodeFromString<StatusResponse>(body)
 
                     withContext(Dispatchers.Main) {
