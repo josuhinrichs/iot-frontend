@@ -6,13 +6,18 @@ import com.example.climao.databinding.ActivityMainBinding
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.graphics.Color
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
-import client.WeatherClient
+import client.BackClient
 import kotlinx.coroutines.Dispatchers
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import android.view.View
 import android.widget.Switch
 import androidx.core.app.ActivityCompat
@@ -25,16 +30,24 @@ import models.weather.WeatherResponse
 
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.decodeFromString
+import models.tuya.StatusResponse
 import kotlin.properties.Delegates
 
-
+@kotlinx.serialization.ExperimentalSerializationApi
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var backClient: BackClient
+    private lateinit var pushToken: String
     private var temperature by Delegates.notNull<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        backClient = Retrofit.Builder()
+            .baseUrl("https://climasync-4ibw.onrender.com/")
+            .build().create(BackClient::class.java)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         // Check if onboarding is complete
@@ -51,6 +64,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        askNotificationPermission()
+        fetchLocation()
+        fetchDeviceStatus()
         //fetchLocation()
 
         //updateTemperatureColor(39) // TODO: INTEGRAR COM CHECAGEM DE CLIMA
@@ -72,6 +88,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
     private fun fetchLocationPermission() {
         if (ActivityCompat.checkSelfPermission(
                 this,
@@ -93,6 +110,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @kotlinx.serialization.ExperimentalSerializationApi
     private fun fetchLocation() {
         if (ActivityCompat.checkSelfPermission(
                 this,
@@ -112,39 +130,107 @@ class MainActivity : AppCompatActivity() {
             // Verifique se a localização é válida
             if (location != null) {
                 // Obtenha os detalhes do endereço da localização atual
-                GlobalScope.launch(Dispatchers.Main) {
-                    getWeatherInfo(location.latitude, location.longitude)
-                    updateTemperatureColor(temperature)
-                }
+                getWeatherInfo(location.latitude, location.longitude)
             }else{
-               binding.textView4.text = ""
+                binding.textView4.text = ""
                 binding.textView5.text = "Localização não encontrada"
             }
         }
     }
+    @kotlinx.serialization.ExperimentalSerializationApi
     private fun getWeatherInfo(latitude:Double, longitude:Double ){
-
-        val service = Retrofit.Builder()
-            .baseUrl("https://climasync-4ibw.onrender.com") //TODO: alterar URL
-            .build().create(WeatherClient::class.java)
-
-        runBlocking {
+        GlobalScope.launch(Dispatchers.IO) {
             withContext(Dispatchers.Default) {
-                    val response = service.getWeatherInfo(latitude!!, longitude!!)
+                    val response = backClient.getWeatherInfo(latitude, longitude)
                     if (response.isSuccessful) {
-                        val responseFormatted = Json.decodeFromString<WeatherResponse>(response.body()?.string()!!)
-                        temperature = responseFormatted.results.temp
-                        binding.textView4.text = temperature.toString()
+                        val body = response.body()?.string()!!
+                        Log.d("RESPONSE", body)
+                        val responseFormatted = Json.decodeFromString<WeatherResponse>(body)
 
-                        Log.d("TEST",responseFormatted.toString())
+                        withContext(Dispatchers.Main) {
+                            binding.textView4.text =
+                                responseFormatted.results.temp.toString() + "ºC"
+                            binding.textView5.text = responseFormatted.results.description
+                        }
+
+                    }
             }
         }
 
+    }
 
-    }}
+    @kotlinx.serialization.ExperimentalSerializationApi
+    private fun fetchDeviceStatus(){
+        GlobalScope.launch(Dispatchers.IO) {
+            withContext(Dispatchers.Default) {
+                //TODO: device id como env
+                val response = backClient.getDeviceStatus("vdevo171874684507405")
+                if (response.isSuccessful) {
+                    val body = response.body()?.string()!!
+                    Log.d("RESPONSE", body)
+                    val responseFormatted = Json.decodeFromString<StatusResponse>(body)
 
-    private fun updateTemperatureColor(temperature: Int) {
-        val weatherRectangle = binding.weatherRectangle
+                    withContext(Dispatchers.Main) {
+                        // TODO: alterar textos da tomada
+                        // TODO: alterar posição do switch
+                    }
+
+                }
+            }
+
+        }
+
+    }
+    fun askNotificationPermission() {
+        // This is only necessary for API level >= 33 (TIRAMISU)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) ==
+                PackageManager.PERMISSION_GRANTED
+            ) {
+                // FCM SDK (and your app) can post notifications.
+            } else if (shouldShowRequestPermissionRationale(android.Manifest.permission.POST_NOTIFICATIONS)) {
+                // TODO: display an educational UI explaining to the user the features that will be enabled
+                //       by them granting the POST_NOTIFICATION permission. This UI should provide the user
+                //       "OK" and "No thanks" buttons. If the user selects "OK," directly request the permission.
+                //       If the user selects "No thanks," allow the user to continue without notifications.
+            } else {
+                // Directly ask for the permission
+                requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+            }
+        } else {
+            FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w("FirebaseCloudMessaging", "Fetching FCM registration token failed", task.exception)
+                    return@OnCompleteListener
+                }
+
+                // Get new FCM registration token
+                pushToken = task.result
+                Log.w("FirebaseCloudMessaging", "Fetching FCM registration token: $pushToken")
+
+            })
+        }
+    }
+
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission(),
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w("FirebaseCloudMessaging", "Fetching FCM registration token failed", task.exception)
+                    return@OnCompleteListener
+                }
+
+                // Get new FCM registration token
+                val token = task.result
+                Log.w("FirebaseCloudMessaging", "Fetching FCM registration token: $token")
+
+            })
+        } else {
+            // TODO: Inform user that that your app will not show notifications.
+        }
+    }
 
         // Determine the color based on temperature
         val color = when {
