@@ -4,16 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#CACACA"
+    android:background="@color/background"
+    android:backgroundTint="@color/background"
     android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout2"
+        android:id="@+id/weatherRectangle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primary"
-        android:fitsSystemWindows="true">
+        android:background="@drawable/yellow_border_radius"
+        android:backgroundTint="@color/primary"
+        android:fitsSystemWindows="true"
+        android:visibility="visible">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -21,7 +24,7 @@
             android:layout_marginBottom="20sp">
 
             <com.google.android.material.materialswitch.MaterialSwitch
-                android:id="@+id/switch1"
+                android:id="@+id/climasyncSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -47,22 +50,22 @@
                 android:textColor="@color/gray"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/switch1" />
+                app:layout_constraintTop_toBottomOf="@+id/climasyncSwitch" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView2"
                 android:layout_width="51dp"
                 android:layout_height="18dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="8dp"
-                app:cardBackgroundColor="#FFF8DF"
+                android:layout_marginStart="8dp"
+                app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="43dp"
                 app:cardElevation="0dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView2"
                 app:layout_constraintStart_toEndOf="@+id/textView2"
-                app:layout_constraintTop_toBottomOf="@+id/switch1">
+                app:layout_constraintTop_toTopOf="@+id/textView2">
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/homeStatus"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/open_sans"
@@ -80,7 +83,7 @@
                 android:fontFamily="@font/poppins_bold"
                 android:text="--°C"
                 android:textColor="@color/black"
-                android:textSize="64dp"
+                android:textSize="60sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -142,45 +145,44 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout6"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background"
+        android:foregroundTint="#C32C2C"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="455dp"
-            android:layout_height="205dp"
-            android:layout_marginTop="348dp"
+            android:id="@+id/extCircle"
+            android:layout_width="419dp"
+            android:layout_height="200dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView"
             app:srcCompat="@drawable/extcircle" />
 
         <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="349dp"
-            android:layout_height="217dp"
-            android:layout_marginTop="376dp"
+            android:id="@+id/middleCircle"
+            android:layout_width="320dp"
+            android:layout_height="152dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView"
             app:srcCompat="@drawable/middlecircle" />
 
         <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="248dp"
-            android:layout_height="115dp"
-            android:layout_marginTop="436dp"
+            android:id="@+id/innerCircle"
+            android:layout_width="241dp"
+            android:layout_height="88dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView"
             app:srcCompat="@drawable/innercircle" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
-            android:layout_width="380dp"
+            android:layout_width="360dp"
             android:layout_height="69dp"
             android:layout_marginTop="24dp"
             app:cardBackgroundColor="#00FFFFFF"
@@ -275,6 +277,57 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
+
+        <View
+            android:id="@+id/blackFilter"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#B3000000"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/notificationContainer"
+            android:layout_width="328dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="44dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/middleCircle">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView19"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="❄️ Alerta de frio"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/textView23"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="12:09"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="306dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:paddingVertical="8dp"
+                android:text="Hora de um chá quentinho! Mantenha-se aquecido neste clima gelado. ☕❄️"
+                android:textColor="@color/white" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

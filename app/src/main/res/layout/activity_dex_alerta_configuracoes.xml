@@ -278,7 +278,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/open_sans_bold"
-                            android:text="5 vezes ao dia"
+                            android:text="70% de umidade"
                             android:textColor="@color/primary"
                             tools:layout_editor_absoluteX="9dp"
                             tools:layout_editor_absoluteY="14dp" />
