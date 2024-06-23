@@ -4,9 +4,11 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class WeatherResponse(
-    val by: String,
-    val valid_key: Boolean,
-    val results: Results,
-    val execution_time: Int,
-    val from_cache: Boolean
+    val temp: Int,
+    val date: String,
+    val time: String,
+    val humidity: Double,
+    val city: String,
+    val city_name:String,
+    val condition: String,
 )

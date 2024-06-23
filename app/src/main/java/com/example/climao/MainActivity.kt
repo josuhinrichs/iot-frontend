@@ -55,7 +55,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         backClient = Retrofit.Builder()
-            .baseUrl("https://climasync-4ibw.onrender.com/")
+            .baseUrl("http://10.0.2.2:5000/")
+            //.baseUrl("https://climasync-4ibw.onrender.com/") //local: http://10.0.2.2:5000/
             .build().create(BackClient::class.java)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -75,7 +76,14 @@ class MainActivity : AppCompatActivity() {
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         askNotificationPermission()
+        if( ! this::pushToken.isInitialized){
+            Log.d("DEBUG", "Push token não inicializado")
+            pushToken = "pushToken"
+            // TODO: checar se a variável pushToken tem valor
+        }
+
         getUserInfo()
+
         fetchLocation()
         fetchDeviceStatus()
         //updateTemperatureColor(39) // TODO: INTEGRAR COM CHECAGEM DE CLIMA
@@ -104,10 +112,12 @@ class MainActivity : AppCompatActivity() {
     }
     private fun getUserInfo(){
         val jsonObject = JSONObject()
-        jsonObject.put("firebase_token", pushToken)
+
+        jsonObject.put("firebase_token",pushToken)
 
         val jsonObjectString = jsonObject.toString()
         val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+        Log.d("REQUEST_BODY", jsonObjectString)
 
         GlobalScope.launch(Dispatchers.IO) {
             withContext(Dispatchers.Default) {
@@ -196,23 +206,28 @@ class MainActivity : AppCompatActivity() {
     }
     @kotlinx.serialization.ExperimentalSerializationApi
     private fun getWeatherInfo(latitude:Double, longitude:Double ){
-        
+        val jsonObject = JSONObject()
+        jsonObject.put("token", pushToken)
+        jsonObject.put("latitude", latitude)
+        jsonObject.put("longitude", longitude)
+
+        val jsonObjectString = jsonObject.toString()
+        val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+        Log.d("REQUEST_BODY", jsonObjectString)
+
         GlobalScope.launch(Dispatchers.IO) {
             withContext(Dispatchers.Default) {
-                    val response = backClient.getWeatherInfo(latitude, longitude)
-                Log.d("DEBUG", "CHEGOU NA REQUISIÇÃO DO CLIMA")
+                    val response = backClient.getWeatherInfo(requestBody)
                     if (response.isSuccessful) {
                         val body = response.body()?.string()!!
                         Log.d("REQUEST_RESPONSE", body)
                         val responseFormatted = Json.decodeFromString<WeatherResponse>(body)
 
                         withContext(Dispatchers.Main) {
-                            updateVariable(responseFormatted.results.temp)
+                            updateVariable(responseFormatted.temp)
 
-                            binding.textView4.text =
-                                responseFormatted.results.temp.toString() + "ºC"
-
-                            binding.textView5.text = responseFormatted.results.description
+                            binding.textView4.text = responseFormatted.temp.toString() + "ºC"
+                            binding.textView5.text = responseFormatted.condition
                         }
 
                     }
@@ -269,6 +284,7 @@ class MainActivity : AppCompatActivity() {
                 // Get new FCM registration token
                 pushToken = task.result
                 Log.w("FirebaseCloudMessaging", "Fetching FCM registration token: $pushToken")
+                Log.d("REQUEST_RESPONSE", "token firebase obtido $pushToken")
 
             })
         }
