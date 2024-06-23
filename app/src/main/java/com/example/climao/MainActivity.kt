@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var backClient: BackClient
     private lateinit var pushToken: String
     private var temperature: Int = 30
+    private var deviceID: String = "vdevo171874684507405"
     private lateinit var user: User
 
     private val _nowTemperature = MutableLiveData<Int>(30)
@@ -241,7 +242,7 @@ class MainActivity : AppCompatActivity() {
         GlobalScope.launch(Dispatchers.IO) {
             withContext(Dispatchers.Default) {
                 //TODO: device id como env
-                val response = backClient.getDeviceStatus("vdevo171874684507405")
+                val response = backClient.getDeviceStatus(deviceID)
                 if (response.isSuccessful) {
                     val body = response.body()?.string()!!
                     Log.d("REQUEST_RESPONSE", body)
