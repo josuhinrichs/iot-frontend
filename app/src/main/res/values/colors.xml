@@ -8,6 +8,10 @@
     <color name="gray">#FF353535</color>
     <color name="green">#FF1AE362</color>
     <color name="terciary">#FFEF441A</color>
-    <color name="light_gray">#ADADAD</color>
-    <color name="switch_disabled">#E2E2EC</color>
+    <color name="light_gray">#FFADADAD</color>
+    <color name="switch_disabled">#FFE2E2EC</color>
+    <color name="hot">#FFFF8952</color>
+    <color name="warm">#FFFFD542</color>
+    <color name="cool">#FF74B7F4</color>
+    <color name="cold">#FF93EBEC</color>
 </resources>

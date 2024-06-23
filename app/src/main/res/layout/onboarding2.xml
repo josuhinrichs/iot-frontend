@@ -7,28 +7,34 @@
     android:background="@color/primary"
     android:backgroundTint="@color/primary">
 
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="246dp"
+        android:layout_height="282dp"
+        android:layout_marginTop="150dp"
+        android:src="@drawable/guardachuvamulher"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
-        android:id="@+id/button8"
-        android:layout_width="135dp"
-        android:layout_height="59dp"
-        android:layout_marginStart="138dp"
-        android:layout_marginTop="72dp"
-        android:layout_marginEnd="138dp"
+        android:id="@+id/btnContinuar"
+        android:layout_width="150dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="24dp"
         android:backgroundTint="@color/secondary"
         android:fontFamily="@font/open_sans"
         android:text="Continuar"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView27" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView12"
+        android:onClick="nextPage"/>
 
     <Button
-        android:id="@+id/button7"
+        android:id="@+id/btnVoltar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="159dp"
-        android:layout_marginEnd="160dp"
         android:background="#00FFFFFF"
         android:fontFamily="@font/open_sans_bold"
         android:text="Voltar"
@@ -36,17 +42,15 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button8" />
+        app:layout_constraintTop_toBottomOf="@+id/btnContinuar"
+        android:onClick="backPage"/>
 
     <TextView
         android:id="@+id/textView27"
         android:layout_width="367dp"
-        android:layout_height="154dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="60dp"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans"
-        android:text="Com o Climasync, gerenciamos de forma inteligente o seu ambiente interno, ajustando-se automaticamente às condições de temperatura e umidade."
+        android:text="Com o Climão, gerenciamos de forma inteligente o seu ambiente interno, ajustando-se automaticamente às condições de temperatura e umidade."
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/black"
@@ -59,29 +63,23 @@
         android:id="@+id/textView41"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="23dp"
-        android:layout_marginEnd="56dp"
-        android:fontFamily="@font/open_sans"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/poppins_bold"
         android:text="Menos preocupações"
         android:textColor="@color/black"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView7" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView6" />
 
     <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="241dp"
-        android:layout_height="266dp"
-        android:layout_marginStart="85dp"
-        android:layout_marginTop="110dp"
-        android:layout_marginEnd="85dp"
+        android:id="@+id/imageView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/guardachuvamulher" />
-
+        app:layout_constraintTop_toBottomOf="@+id/textView27"
+        app:srcCompat="@drawable/progress2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,8 +1,10 @@
 package com.example.climao
+import android.annotation.SuppressLint
 import retrofit2.Retrofit
 import android.os.Bundle
 import com.example.climao.databinding.ActivityMainBinding
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -16,14 +18,20 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
+import android.view.View
+import android.widget.Switch
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import kotlinx.coroutines.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.serialization.ExperimentalSerializationApi
 import models.weather.WeatherResponse
 
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.decodeFromString
 import models.tuya.StatusResponse
+import kotlin.properties.Delegates
 
 @kotlinx.serialization.ExperimentalSerializationApi
 class MainActivity : AppCompatActivity() {
@@ -31,6 +39,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var backClient: BackClient
     private lateinit var pushToken: String
+    private var temperature by Delegates.notNull<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,12 +49,37 @@ class MainActivity : AppCompatActivity() {
             .build().create(BackClient::class.java)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
+
+        // Check if onboarding is complete
+        val sharedPreferences: SharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE)
+        val isOnboardingCompleted = sharedPreferences.getBoolean("isOnboardingCompleted", false)
+
+        if (!isOnboardingCompleted) {
+            // Start OnboardingActivity
+            startActivity(Intent(this, OnboardingActivity::class.java))
+            finish()
+            return
+        }
+
         setContentView(binding.root)
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         askNotificationPermission()
         fetchLocation()
         fetchDeviceStatus()
+        //fetchLocation()
+
+        //updateTemperatureColor(39) // TODO: INTEGRAR COM CHECAGEM DE CLIMA
+
+        val climasyncSwitch = binding.climasyncSwitch
+
+        climasyncSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                onSwitchEnabled()
+            } else {
+                onSwitchDisabled()
+            }
+        }
 
         // Set up the button click listener
         binding.dexAlertaBtn.setOnClickListener {
@@ -97,7 +131,6 @@ class MainActivity : AppCompatActivity() {
             if (location != null) {
                 // Obtenha os detalhes do endereço da localização atual
                 getWeatherInfo(location.latitude, location.longitude)
-
             }else{
                 binding.textView4.text = ""
                 binding.textView5.text = "Localização não encontrada"
@@ -122,7 +155,6 @@ class MainActivity : AppCompatActivity() {
 
                     }
             }
-
         }
 
     }
@@ -200,5 +232,63 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+        // Determine the color based on temperature
+        val color = when {
+            temperature < 25  -> R.color.cold // Cold
+            temperature in 25..28 -> R.color.cool // Cool
+            temperature in 29..33 -> R.color.warm // Warm
+            else -> R.color.hot // Hot
+        }
+
+        // Apply background tint
+        val colorStateList = ContextCompat.getColorStateList(this, color)
+        weatherRectangle.backgroundTintList = colorStateList
+    }
+
+    private fun onSwitchEnabled(){
+        val weatherRectangle = binding.weatherRectangle
+        val extCircle = binding.extCircle
+        val middleCircle = binding.middleCircle
+        val innerCircle = binding.innerCircle
+        val status = binding.homeStatus
+        val blackFilter = binding.blackFilter
+
+        blackFilter.visibility = View.INVISIBLE
+
+        // Apply background tint
+        val colorStateList = ContextCompat.getColorStateList(this, R.color.primary)
+        weatherRectangle.backgroundTintList = colorStateList
+
+        extCircle.visibility = View.VISIBLE
+        middleCircle.visibility = View.VISIBLE
+        innerCircle.visibility = View.VISIBLE
+
+        status.text = "Online"
+        status.setTextColor(ContextCompat.getColor(this, R.color.green))
+
+        //fetchLocation()
+    }
+
+    private fun onSwitchDisabled(){
+        val weatherRectangle = binding.weatherRectangle
+        val extCircle = binding.extCircle
+        val middleCircle = binding.middleCircle
+        val innerCircle = binding.innerCircle
+        val status = binding.homeStatus
+        val blackFilter = binding.blackFilter
+
+        blackFilter.visibility = View.VISIBLE
+
+        extCircle.visibility = View.INVISIBLE
+        middleCircle.visibility = View.INVISIBLE
+        innerCircle.visibility = View.INVISIBLE
+
+        status.text = "Offline"
+        status.setTextColor(ContextCompat.getColor(this, R.color.terciary))
+
+        // Apply background tint
+        val colorStateList = ContextCompat.getColorStateList(this, R.color.switch_disabled)
+        weatherRectangle.backgroundTintList = colorStateList
+    }
 
 }
