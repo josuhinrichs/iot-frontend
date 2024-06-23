@@ -6,6 +6,7 @@ import com.example.climao.databinding.ActivityMainBinding
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.health.connect.datatypes.units.Temperature
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import client.BackClient
@@ -14,14 +15,15 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import android.view.View
 import android.widget.Switch
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import kotlinx.coroutines.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -39,7 +41,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var backClient: BackClient
     private lateinit var pushToken: String
-    private var temperature by Delegates.notNull<Int>()
+    private var temperature: Int = 30
+
+    private val _nowTemperature = MutableLiveData<Int>(30)
+    val nowTemperature: LiveData<Int> get() = _nowTemperature
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,6 +92,32 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, DexAlertaConfiguracoes::class.java)
             startActivity(intent)
         }
+
+        nowTemperature.observe(this, Observer { newValue ->
+            // This block gets called when myVariable changes
+            onMyVariableChanged(newValue)
+        })
+    }
+
+    private fun onMyVariableChanged(newValue: Int?) {
+        // Determine the color based on temperature
+        val weatherRectangle = binding.weatherRectangle
+
+        // Determine the color based on temperature
+        val color = when {
+            newValue!! < 25  -> R.color.cold // Cold
+            newValue in 25..28 -> R.color.cool // Cool
+            newValue in 29..33 -> R.color.warm // Warm
+            else -> R.color.hot // Hot
+        }
+
+        // Apply background tint
+        val colorStateList = ContextCompat.getColorStateList(this, color)
+        weatherRectangle.backgroundTintList = colorStateList
+    }
+
+    private fun updateVariable(newValue: Int) {
+        _nowTemperature.value = newValue
     }
 
     private fun fetchLocationPermission() {
@@ -148,14 +179,19 @@ class MainActivity : AppCompatActivity() {
                         val responseFormatted = Json.decodeFromString<WeatherResponse>(body)
 
                         withContext(Dispatchers.Main) {
+                            updateVariable(responseFormatted.results.temp)
+
                             binding.textView4.text =
                                 responseFormatted.results.temp.toString() + "ºC"
+
                             binding.textView5.text = responseFormatted.results.description
                         }
 
                     }
             }
         }
+
+
 
     }
 
@@ -232,19 +268,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-        // Determine the color based on temperature
-        val color = when {
-            temperature < 25  -> R.color.cold // Cold
-            temperature in 25..28 -> R.color.cool // Cool
-            temperature in 29..33 -> R.color.warm // Warm
-            else -> R.color.hot // Hot
-        }
-
-        // Apply background tint
-        val colorStateList = ContextCompat.getColorStateList(this, color)
-        weatherRectangle.backgroundTintList = colorStateList
-    }
-
     private fun onSwitchEnabled(){
         val weatherRectangle = binding.weatherRectangle
         val extCircle = binding.extCircle
@@ -255,10 +278,6 @@ class MainActivity : AppCompatActivity() {
 
         blackFilter.visibility = View.INVISIBLE
 
-        // Apply background tint
-        val colorStateList = ContextCompat.getColorStateList(this, R.color.primary)
-        weatherRectangle.backgroundTintList = colorStateList
-
         extCircle.visibility = View.VISIBLE
         middleCircle.visibility = View.VISIBLE
         innerCircle.visibility = View.VISIBLE
@@ -266,7 +285,7 @@ class MainActivity : AppCompatActivity() {
         status.text = "Online"
         status.setTextColor(ContextCompat.getColor(this, R.color.green))
 
-        //fetchLocation()
+        fetchLocation()
     }
 
     private fun onSwitchDisabled(){

@@ -83,7 +83,7 @@
                 android:fontFamily="@font/poppins_bold"
                 android:text="--°C"
                 android:textColor="@color/black"
-                android:textSize="60sp"
+                android:textSize="64sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

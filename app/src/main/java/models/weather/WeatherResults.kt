@@ -25,5 +25,5 @@ data class Results(
     val city_name: String,
     val timezone: String,
     val forecast: List<Forecast>,
-    val cref: String
+    val cref: String?
 )
