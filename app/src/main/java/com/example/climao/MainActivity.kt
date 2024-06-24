@@ -170,6 +170,13 @@ class MainActivity : AppCompatActivity() {
 
                     withContext(Dispatchers.Main) {
                         user = responseFormatted
+
+                        // atualizar a última notificação
+                        binding.tituloAlerta.text = user.titulo_alerta
+                        binding.corpoAlerta.text = user.corpo_alerta
+                        binding.horaAlerta.text = user.timestamp_alerta
+
+
                     }
 
                 }
