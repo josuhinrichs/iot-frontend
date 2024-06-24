@@ -142,7 +142,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
                     <com.google.android.material.materialswitch.MaterialSwitch
-                        android:id="@+id/switch8"
+                        android:id="@+id/switchAlertaFrio"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="2dp"
@@ -198,7 +198,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout1">
 
                     <com.google.android.material.materialswitch.MaterialSwitch
-                        android:id="@+id/switch9"
+                        android:id="@+id/switchAlertaCalor"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="2dp"
@@ -286,10 +286,11 @@
                     </LinearLayout>
 
                     <com.google.android.material.materialswitch.MaterialSwitch
-                        android:id="@+id/switch68"
+                        android:id="@+id/switchAlertaHidratacao"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="2dp"
+                        android:checked="false"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:trackTint="@color/switch_thumb_color" />
@@ -322,7 +323,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <com.google.android.material.materialswitch.MaterialSwitch
-                        android:id="@+id/switch6"
+                        android:id="@+id/switchAlertaChuva"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="2dp"
@@ -357,7 +358,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <com.google.android.material.materialswitch.MaterialSwitch
-                        android:id="@+id/switch61"
+                        android:id="@+id/switchAlertaSol"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="2dp"

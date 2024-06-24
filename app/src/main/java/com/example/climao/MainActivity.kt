@@ -1,43 +1,35 @@
 package com.example.climao
-import android.annotation.SuppressLint
-import retrofit2.Retrofit
-import android.os.Bundle
-import com.example.climao.databinding.ActivityMainBinding
+
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.health.connect.datatypes.units.Temperature
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
-import client.BackClient
-import kotlinx.coroutines.Dispatchers
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import android.os.Bundle
 import android.util.Log
-import androidx.activity.result.contract.ActivityResultContracts
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.messaging.FirebaseMessaging
 import android.view.View
-import android.widget.Switch
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import client.BackClient
+import com.example.climao.databinding.ActivityMainBinding
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.serialization.ExperimentalSerializationApi
-import models.weather.WeatherResponse
-
-import kotlinx.serialization.json.Json
 import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import models.client.User
 import models.tuya.StatusResponse
-import org.json.JSONObject
-import kotlin.properties.Delegates
+import models.weather.WeatherResponse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
+import retrofit2.Retrofit
 
 @kotlinx.serialization.ExperimentalSerializationApi
 class MainActivity : AppCompatActivity() {
@@ -45,7 +37,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var backClient: BackClient
     private lateinit var pushToken: String
-    private var temperature: Int = 30
     private var deviceID: String = "vdevo171874684507405"
     private lateinit var user: User
 
@@ -56,8 +47,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         backClient = Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:5000/")
-            //.baseUrl("https://climasync-4ibw.onrender.com/") //local: http://10.0.2.2:5000/
+            .baseUrl("https://climasync-4ibw.onrender.com/") //local: http://10.0.2.2:5000/
             .build().create(BackClient::class.java)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -99,10 +89,23 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        val ventiladorSwitch = binding.ventiladorSwitch
+
+        ventiladorSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                onVentiladorSwitchEnabled()
+            } else {
+                onVentiladoSwitchDisabled()
+            }
+        }
+
         // Set up the button click listener
         binding.dexAlertaBtn.setOnClickListener {
             // Create an Intent to start DexAlertaActivity
+            val myIntent = Intent()
+
             val intent = Intent(this, DexAlertaConfiguracoes::class.java)
+            intent.putExtra("user", user)
             startActivity(intent)
         }
 
@@ -111,6 +114,43 @@ class MainActivity : AppCompatActivity() {
             onMyVariableChanged(newValue)
         })
     }
+
+    private fun onVentiladoSwitchDisabled() {
+        GlobalScope.launch(Dispatchers.IO) {
+            withContext(Dispatchers.Default) {
+                val response = backClient.deviceCommand(deviceID, false)
+                if (response.isSuccessful) {
+                    val body = response.body()?.string()!!
+                    Log.d("REQUEST_RESPONSE", body)
+                }
+            }
+        }
+
+        binding.ventiladorStatusText.text = "Desligado"
+        binding.ventiladorStatusText.setTextColor(ContextCompat.getColor(this, R.color.light_gray))
+
+        val colorStateList = ContextCompat.getColorStateList(this, R.color.light_gray)
+        binding.ventiladorStatusIcon.imageTintList = colorStateList
+    }
+
+    private fun onVentiladorSwitchEnabled() {
+        GlobalScope.launch(Dispatchers.IO) {
+            withContext(Dispatchers.Default) {
+                val response = backClient.deviceCommand(deviceID, true)
+                if (response.isSuccessful) {
+                    val body = response.body()?.string()!!
+                    Log.d("REQUEST_RESPONSE", body)
+                }
+            }
+        }
+
+        binding.ventiladorStatusText.text = "Ligado"
+        binding.ventiladorStatusText.setTextColor(ContextCompat.getColor(this, R.color.secondary))
+
+        val colorStateList = ContextCompat.getColorStateList(this, R.color.secondary)
+        binding.ventiladorStatusIcon.imageTintList = colorStateList
+    }
+
     private fun getUserInfo(){
         val jsonObject = JSONObject()
 
@@ -136,6 +176,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
     private fun onMyVariableChanged(newValue: Int?) {
         // Determine the color based on temperature
         val weatherRectangle = binding.weatherRectangle

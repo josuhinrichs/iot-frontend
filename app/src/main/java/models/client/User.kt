@@ -1,10 +1,11 @@
 package models.client
 
-
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 
 
-@Serializable
+@Parcelize @Serializable
 data class User(
     val firebase_token:String,
     val device_id: String,
@@ -20,4 +21,4 @@ data class User(
     val alerta_sol: Boolean,
     val alerta_chuva: Boolean,
     val alerta_hidratacao: Boolean,
-)
+) : Parcelable

@@ -14,7 +14,7 @@ interface BackClient {
     @GET("/tuya/{deviceID}/status")
     suspend fun getDeviceStatus(@Path("deviceID") deviceID:String,): Response<ResponseBody>
 
-    @POST("/tuya/{deviceId}/switch/{value}")
+    @POST("/tuya/{deviceID}/switch/{value}")
     suspend fun deviceCommand(@Path("deviceID") deviceID:String,@Path("value") value:Boolean): Response<ResponseBody>
 
     @POST("/user")
