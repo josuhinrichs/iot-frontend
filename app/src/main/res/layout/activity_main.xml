@@ -227,7 +227,7 @@
                     android:layout_marginTop="4dp"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    app:layout_constraintStart_toEndOf="@+id/textView6"
+                    app:layout_constraintStart_toEndOf="@+id/ventiladorOnlineStatusText"
                     app:layout_constraintTop_toBottomOf="@+id/textView">
 
                     <ImageView
@@ -251,7 +251,7 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/textView6"
+                    android:id="@+id/ventiladorOnlineStatusText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"

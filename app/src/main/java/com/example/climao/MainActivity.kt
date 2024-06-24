@@ -290,8 +290,17 @@ class MainActivity : AppCompatActivity() {
                     val responseFormatted = Json.decodeFromString<StatusResponse>(body)
 
                     withContext(Dispatchers.Main) {
-                        // TODO: alterar textos da tomada
-                        // TODO: alterar posição do switch
+                        binding.ventiladorSwitch.isChecked = responseFormatted.isTurnedOn
+                        
+                        //TODO: ajustar as cores
+                        if(responseFormatted.isOnline){
+                            binding.ventiladorOnlineStatusText.text = "Online"
+                            //binding.ventiladorOnlineStatusText.setTextColor(ContextCompat.getColor(this, R.color.green))
+
+                        }else{
+                            binding.ventiladorOnlineStatusText.text = "Offline"
+                            //binding.ventiladorOnlineStatusText.setTextColor(ContextCompat.getColor(this, R.color.light_gray))
+                        }
                     }
 
                 }
