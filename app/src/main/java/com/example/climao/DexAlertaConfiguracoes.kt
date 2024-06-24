@@ -15,8 +15,12 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import models.client.User
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
+import retrofit2.Retrofit
 import retrofit2.http.Body
 
 class DexAlertaConfiguracoes : AppCompatActivity() {
@@ -33,11 +37,12 @@ class DexAlertaConfiguracoes : AppCompatActivity() {
 
         Log.d("TESTE", user.toString())
 
+        backClient = Retrofit.Builder()
+            .baseUrl("https://climasync-4ibw.onrender.com/") //local: http://10.0.2.2:5000/
+            .build().create(BackClient::class.java)
+
         val switchAlertaHidratacao = binding.switchAlertaHidratacao
         switchAlertaHidratacao.isChecked = user.alerta_hidratacao
-
-        val switchAlertaCalor = binding.switchAlertaCalor
-        switchAlertaCalor.isChecked = user.alerta_calor
 
         val switchAlertaChuva= binding.switchAlertaChuva
         switchAlertaChuva.isChecked = user.alerta_chuva
@@ -52,14 +57,21 @@ class DexAlertaConfiguracoes : AppCompatActivity() {
             if (isChecked) {
                 var body: RequestBody.Companion = RequestBody
 
-                body.put("token", user.firebase_token)
-                body.put("type", "alerta-hidratacao")
-                body.put("value", true)
+                val jsonString = """
+                    {
+                      "token": "${user.firebase_token}",
+                      "type": "alerta_hidratacao",
+                      "value": true
+                    }
+                    """
+
+                val JSON = "application/json; charset=utf-8".toMediaTypeOrNull()
+                val requestBody = jsonString.toRequestBody(JSON)
 
                 GlobalScope.launch(Dispatchers.IO) {
                     withContext(Dispatchers.Default) {
 
-                        val response = backClient.setAlertValue(jsonBody)
+                        val response = backClient.setAlertValue(requestBody)
                         if (response.isSuccessful) {
                             val body = response.body()?.string()!!
                             Log.d("REQUEST_RESPONSE", body)
@@ -67,7 +79,29 @@ class DexAlertaConfiguracoes : AppCompatActivity() {
                     }
                 }
             } else {
-                onSwitchDisabled()
+                var body: RequestBody.Companion = RequestBody
+
+                val jsonString = """
+                    {
+                      "token": "${user.firebase_token}",
+                      "type": "alerta_hidratacao",
+                      "value": false
+                    }
+                    """
+
+                val JSON = "application/json; charset=utf-8".toMediaTypeOrNull()
+                val requestBody = jsonString.toRequestBody(JSON)
+
+                GlobalScope.launch(Dispatchers.IO) {
+                    withContext(Dispatchers.Default) {
+
+                        val response = backClient.setAlertValue(requestBody)
+                        if (response.isSuccessful) {
+                            val body = response.body()?.string()!!
+                            Log.d("REQUEST_RESPONSE", body)
+                        }
+                    }
+                }
             }
         }
 

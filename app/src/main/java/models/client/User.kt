@@ -16,7 +16,6 @@ data class User(
     val tipo_alerta: String?,
     val timestamp_alerta: String?,
 
-    val alerta_calor: Boolean,
     val alerta_frio: Boolean,
     val alerta_sol: Boolean,
     val alerta_chuva: Boolean,
