@@ -40,8 +40,8 @@
         </activity>
 
         <service
-            android:name="models.firebase.PushNotificationService"
-            android:exported="false">
+            android:name="firebase.PushNotificationService"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -53,6 +53,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCa-m0UKLIdGryL_PBTJvn4n3l1sL9YDi8" />
+        <meta-data
+        android:name="com.google.firebase.messaging.default_notification_icon"
+        android:resource="@drawable/climasync_icon" />
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.example.climao
 
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var backClient: BackClient
-    private lateinit var pushToken: String
+    private var pushToken: String? = null
     private var deviceID: String = "vdevo171874684507405"
     private lateinit var user: User
 
@@ -66,8 +67,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-        askNotificationPermission()
-        if( ! this::pushToken.isInitialized){
+
+
+        pushToken = getTokenFromPrefs()
+        if (pushToken != null) {
+            Log.d("FirebaseCloudMessaging", "Token retrieved from SharedPreferences: $pushToken")
+        } else {
+            askNotificationPermission()
+        }
+        if( pushToken == null){
             Log.d("DEBUG", "Push token não inicializado")
             pushToken = "pushToken"
             // TODO: checar se a variável pushToken tem valor
@@ -298,7 +306,7 @@ class MainActivity : AppCompatActivity() {
 
                     withContext(Dispatchers.Main) {
                         binding.ventiladorSwitch.isChecked = responseFormatted.isTurnedOn
-                        
+
                         //TODO: ajustar as cores
                         if(responseFormatted.isOnline){
                             binding.ventiladorOnlineStatusText.text = "Online"
@@ -316,35 +324,22 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-    fun askNotificationPermission() {
-        // This is only necessary for API level >= 33 (TIRAMISU)
+    private fun askNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) ==
                 PackageManager.PERMISSION_GRANTED
             ) {
-                // FCM SDK (and your app) can post notifications.
+                getTokenAndStore()
             } else if (shouldShowRequestPermissionRationale(android.Manifest.permission.POST_NOTIFICATIONS)) {
                 // TODO: display an educational UI explaining to the user the features that will be enabled
                 //       by them granting the POST_NOTIFICATION permission. This UI should provide the user
                 //       "OK" and "No thanks" buttons. If the user selects "OK," directly request the permission.
                 //       If the user selects "No thanks," allow the user to continue without notifications.
             } else {
-                // Directly ask for the permission
                 requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
             }
         } else {
-            FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    Log.w("FirebaseCloudMessaging", "Fetching FCM registration token failed", task.exception)
-                    return@OnCompleteListener
-                }
-
-                // Get new FCM registration token
-                pushToken = task.result
-                Log.w("FirebaseCloudMessaging", "Fetching FCM registration token: $pushToken")
-                Log.d("REQUEST_RESPONSE", "token firebase obtido $pushToken")
-
-            })
+            getTokenAndStore()
         }
     }
 
@@ -352,19 +347,9 @@ class MainActivity : AppCompatActivity() {
         ActivityResultContracts.RequestPermission(),
     ) { isGranted: Boolean ->
         if (isGranted) {
-            FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    Log.w("FirebaseCloudMessaging", "Fetching FCM registration token failed", task.exception)
-                    return@OnCompleteListener
-                }
-
-                // Get new FCM registration token
-                val token = task.result
-                Log.w("FirebaseCloudMessaging", "Fetching FCM registration token: $token")
-
-            })
+            getTokenAndStore()
         } else {
-            // TODO: Inform user that that your app will not show notifications.
+            // TODO: Inform user that your app will not show notifications.
         }
     }
 
@@ -408,6 +393,34 @@ class MainActivity : AppCompatActivity() {
         // Apply background tint
         val colorStateList = ContextCompat.getColorStateList(this, R.color.switch_disabled)
         weatherRectangle.backgroundTintList = colorStateList
+    }
+
+    private fun saveTokenToPrefs(token: String) {
+        val sharedPreferences = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("fcm_token", token)
+        editor.apply()
+    }
+
+    private fun getTokenFromPrefs(): String? {
+        val sharedPreferences = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        return sharedPreferences.getString("fcm_token", null)
+    }
+
+    private fun getTokenAndStore() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w("FirebaseCloudMessaging", "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+            Log.w("FirebaseCloudMessaging", "Fetching FCM registration token: $token")
+
+            // Save token to SharedPreferences
+            saveTokenToPrefs(token)
+        })
     }
 
 }
