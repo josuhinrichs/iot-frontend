@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var backClient: BackClient
     private var pushToken: String? = null
-    private var deviceID: String = "vdevo171874684507405"
+    private var deviceID: String = "eb0340f4dd318cdfbdo5ww"//"vdevo171874684507405"
     private lateinit var user: User
 
     private val _nowTemperature = MutableLiveData<Int>(30)
@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
             askNotificationPermission()
         }
         if( pushToken == null){
-            Log.d("DEBUG", "Push token não inicializado")
+            Log.d("FirebaseCloudMessaging", "Push token não inicializado")
             pushToken = "pushToken"
             // TODO: checar se a variável pushToken tem valor
         }
@@ -188,18 +188,23 @@ class MainActivity : AppCompatActivity() {
                         binding.tituloAlerta.text = user.titulo_alerta
                         binding.corpoAlerta.text = user.corpo_alerta
 
-                        //converter data da última notificação
-                        // Parse the input date string
-                        val zonedDateTime = ZonedDateTime.parse(user.timestamp_alerta).withZoneSameInstant(
-                            ZoneId.of("UTC-3"))
+                        if(user.timestamp_alerta != null){
+                            //converter data da última notificação
+                            // Parse the input date string
+                            val zonedDateTime = ZonedDateTime.parse(user.timestamp_alerta).withZoneSameInstant(
+                                ZoneId.of("UTC-3"))
 
-                        // Define the desired output format
-                        val outputFormatter = DateTimeFormatter.ofPattern(
-                            "HH:mm dd/MM",
-                            Locale.getDefault())
+                            // Define the desired output format
+                            val outputFormatter = DateTimeFormatter.ofPattern(
+                                "HH:mm dd/MM",
+                                Locale.getDefault())
 
-                        // Format the parsed date to the desired output format
-                        binding.horaAlerta.text = zonedDateTime.format(outputFormatter)
+                            // Format the parsed date to the desired output format
+                            binding.horaAlerta.text = zonedDateTime.format(outputFormatter)
+                        }else{
+                            binding.horaAlerta.text = ""
+                        }
+
 
 
                     }
