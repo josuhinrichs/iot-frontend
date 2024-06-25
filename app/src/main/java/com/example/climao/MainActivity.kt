@@ -220,9 +220,9 @@ class MainActivity : AppCompatActivity() {
 
         // Determine the color based on temperature
         val color = when {
-            newValue!! < 25  -> R.color.cold // Cold
-            newValue in 25..28 -> R.color.cool // Cool
-            newValue in 29..33 -> R.color.warm // Warm
+            newValue!! < 20  -> R.color.cold // Cold
+            newValue in 20..23 -> R.color.cool // Cool
+            newValue in 23..33 -> R.color.warm // Warm
             else -> R.color.hot // Hot
         }
 
