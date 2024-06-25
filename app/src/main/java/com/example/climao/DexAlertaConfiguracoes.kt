@@ -105,10 +105,160 @@ class DexAlertaConfiguracoes : AppCompatActivity() {
             }
         }
 
-        binding.btnEditar.setOnClickListener {
-            // Create an Intent to start DexAlertaActivity
-            val intent = Intent(this, DexAlertaActivity::class.java)
-            startActivity(intent)
+        switchAlertaChuva.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                var body: RequestBody.Companion = RequestBody
+
+                val jsonString = """
+                    {
+                      "token": "${user.firebase_token}",
+                      "type": "alerta_chuva",
+                      "value": true
+                    }
+                    """
+
+                val JSON = "application/json; charset=utf-8".toMediaTypeOrNull()
+                val requestBody = jsonString.toRequestBody(JSON)
+
+                GlobalScope.launch(Dispatchers.IO) {
+                    withContext(Dispatchers.Default) {
+
+                        val response = backClient.setAlertValue(requestBody)
+                        if (response.isSuccessful) {
+                            val body = response.body()?.string()!!
+                            Log.d("REQUEST_RESPONSE", body)
+                        }
+                    }
+                }
+            } else {
+                var body: RequestBody.Companion = RequestBody
+
+                val jsonString = """
+                    {
+                      "token": "${user.firebase_token}",
+                      "type": "alerta_chuva",
+                      "value": false
+                    }
+                    """
+
+                val JSON = "application/json; charset=utf-8".toMediaTypeOrNull()
+                val requestBody = jsonString.toRequestBody(JSON)
+
+                GlobalScope.launch(Dispatchers.IO) {
+                    withContext(Dispatchers.Default) {
+
+                        val response = backClient.setAlertValue(requestBody)
+                        if (response.isSuccessful) {
+                            val body = response.body()?.string()!!
+                            Log.d("REQUEST_RESPONSE", body)
+                        }
+                    }
+                }
+            }
+        }
+
+        switchAlertaSol.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                var body: RequestBody.Companion = RequestBody
+
+                val jsonString = """
+                    {
+                      "token": "${user.firebase_token}",
+                      "type": "alerta_sol",
+                      "value": true
+                    }
+                    """
+
+                val JSON = "application/json; charset=utf-8".toMediaTypeOrNull()
+                val requestBody = jsonString.toRequestBody(JSON)
+
+                GlobalScope.launch(Dispatchers.IO) {
+                    withContext(Dispatchers.Default) {
+
+                        val response = backClient.setAlertValue(requestBody)
+                        if (response.isSuccessful) {
+                            val body = response.body()?.string()!!
+                            Log.d("REQUEST_RESPONSE", body)
+                        }
+                    }
+                }
+            } else {
+                var body: RequestBody.Companion = RequestBody
+
+                val jsonString = """
+                    {
+                      "token": "${user.firebase_token}",
+                      "type": "alerta_sol",
+                      "value": false
+                    }
+                    """
+
+                val JSON = "application/json; charset=utf-8".toMediaTypeOrNull()
+                val requestBody = jsonString.toRequestBody(JSON)
+
+                GlobalScope.launch(Dispatchers.IO) {
+                    withContext(Dispatchers.Default) {
+
+                        val response = backClient.setAlertValue(requestBody)
+                        if (response.isSuccessful) {
+                            val body = response.body()?.string()!!
+                            Log.d("REQUEST_RESPONSE", body)
+                        }
+                    }
+                }
+            }
+        }
+
+        switchAlertaFrio.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                var body: RequestBody.Companion = RequestBody
+
+                val jsonString = """
+                    {
+                      "token": "${user.firebase_token}",
+                      "type": "alerta_frio",
+                      "value": true
+                    }
+                    """
+
+                val JSON = "application/json; charset=utf-8".toMediaTypeOrNull()
+                val requestBody = jsonString.toRequestBody(JSON)
+
+                GlobalScope.launch(Dispatchers.IO) {
+                    withContext(Dispatchers.Default) {
+
+                        val response = backClient.setAlertValue(requestBody)
+                        if (response.isSuccessful) {
+                            val body = response.body()?.string()!!
+                            Log.d("REQUEST_RESPONSE", body)
+                        }
+                    }
+                }
+            } else {
+                var body: RequestBody.Companion = RequestBody
+
+                val jsonString = """
+                    {
+                      "token": "${user.firebase_token}",
+                      "type": "alerta_frio",
+                      "value": false
+                    }
+                    """
+
+                val JSON = "application/json; charset=utf-8".toMediaTypeOrNull()
+                val requestBody = jsonString.toRequestBody(JSON)
+
+                GlobalScope.launch(Dispatchers.IO) {
+                    withContext(Dispatchers.Default) {
+
+                        val response = backClient.setAlertValue(requestBody)
+                        if (response.isSuccessful) {
+                            val body = response.body()?.string()!!
+                            Log.d("REQUEST_RESPONSE", body)
+                        }
+                    }
+                }
+            }
         }
 
     }

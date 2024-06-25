@@ -2,18 +2,29 @@ package com.example.climao
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.example.climao.databinding.ActivityOnboardingBinding
+import com.google.android.gms.location.FusedLocationProviderClient
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.util.Locale
 
 class OnboardingActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityOnboardingBinding
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,9 +39,6 @@ class OnboardingActivity : AppCompatActivity() {
 
         val adapter = OnboardingAdapter(layouts)
         binding.viewPager.adapter = adapter
-
-
-
 
     }
 
@@ -70,6 +78,66 @@ class OnboardingActivity : AppCompatActivity() {
         })
     }
 
+    private fun fetchLocationAndCep() {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // Se permissões de localização não forem concedidas, solicite-as novamente.
+            fetchLocationPermission()
+            return
+        }
+
+        // Obtenha a última localização conhecida do usuário
+        fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
+            // Verifique se a localização é válida
+            if (location != null) {
+                // Obtenha os detalhes do endereço da localização atual
+                GlobalScope.launch(Dispatchers.Main) {
+                    val address = getAddressFromLocation(location.latitude, location.longitude)
+
+                    val textoRua: TextView = findViewById(R.id.enderecoRua)
+                    textoRua.text = address.thoroughfare
+
+                    val enderecoBairro: TextView = findViewById(R.id.enderecoBairro)
+                    enderecoBairro.text = address.thoroughfare
+
+                }
+            }
+        }
+    }
+
+    private fun fetchLocationPermission() {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(
+                    android.Manifest.permission.ACCESS_FINE_LOCATION,
+                    android.Manifest.permission.ACCESS_COARSE_LOCATION
+                ),
+                101
+            )
+            return
+        }
+    }
+
+    private suspend fun getAddressFromLocation(latitude: Double, longitude: Double): Address {
+        val geocoder = Geocoder(this, Locale.getDefault())
+        val addresses = geocoder.getFromLocation(latitude, longitude, 1)
+        return addresses!![0]
+    }
+
     fun nextPage(view: View) {
         val currentItem = binding.viewPager.currentItem
         if (currentItem < (binding.viewPager.adapter?.itemCount?.minus(1) ?: 0)) {
@@ -87,5 +155,10 @@ class OnboardingActivity : AppCompatActivity() {
     fun jumpToLastPage(view: View) {
         val lastItem = (binding.viewPager.adapter?.itemCount ?: 0) - 1
         binding.viewPager.currentItem = lastItem
+    }
+
+    fun fetchUserLocation(view: View) {
+        fetchLocationPermission()
+        fetchLocationAndCep()
     }
 }

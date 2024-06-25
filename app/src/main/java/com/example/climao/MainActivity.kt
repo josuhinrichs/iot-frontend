@@ -83,6 +83,7 @@ class MainActivity : AppCompatActivity() {
 
         getUserInfo()
 
+        fetchLocationPermission()
         fetchLocation()
         fetchDeviceStatus()
         //updateTemperatureColor(39) // TODO: INTEGRAR COM CHECAGEM DE CLIMA
