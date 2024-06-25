@@ -16,6 +16,7 @@ import androidx.core.app.ActivityCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.example.climao.databinding.ActivityOnboardingBinding
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -31,6 +32,8 @@ class OnboardingActivity : AppCompatActivity() {
         binding = ActivityOnboardingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+
         val layouts = listOf(
             R.layout.onboarding,
             R.layout.onboarding2,
@@ -40,6 +43,10 @@ class OnboardingActivity : AppCompatActivity() {
         val adapter = OnboardingAdapter(layouts)
         binding.viewPager.adapter = adapter
 
+    }
+
+    fun fetchUserLocation(view: View) {
+        fetchLocationPermission()
     }
 
     fun completeOnboarding(view: View) {
@@ -78,39 +85,6 @@ class OnboardingActivity : AppCompatActivity() {
         })
     }
 
-    private fun fetchLocationAndCep() {
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this,
-                android.Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            // Se permissões de localização não forem concedidas, solicite-as novamente.
-            fetchLocationPermission()
-            return
-        }
-
-        // Obtenha a última localização conhecida do usuário
-        fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
-            // Verifique se a localização é válida
-            if (location != null) {
-                // Obtenha os detalhes do endereço da localização atual
-                GlobalScope.launch(Dispatchers.Main) {
-                    val address = getAddressFromLocation(location.latitude, location.longitude)
-
-                    val textoRua: TextView = findViewById(R.id.enderecoRua)
-                    textoRua.text = address.thoroughfare
-
-                    val enderecoBairro: TextView = findViewById(R.id.enderecoBairro)
-                    enderecoBairro.text = address.thoroughfare
-
-                }
-            }
-        }
-    }
-
     private fun fetchLocationPermission() {
         if (ActivityCompat.checkSelfPermission(
                 this,
@@ -132,12 +106,6 @@ class OnboardingActivity : AppCompatActivity() {
         }
     }
 
-    private suspend fun getAddressFromLocation(latitude: Double, longitude: Double): Address {
-        val geocoder = Geocoder(this, Locale.getDefault())
-        val addresses = geocoder.getFromLocation(latitude, longitude, 1)
-        return addresses!![0]
-    }
-
     fun nextPage(view: View) {
         val currentItem = binding.viewPager.currentItem
         if (currentItem < (binding.viewPager.adapter?.itemCount?.minus(1) ?: 0)) {
@@ -157,8 +125,5 @@ class OnboardingActivity : AppCompatActivity() {
         binding.viewPager.currentItem = lastItem
     }
 
-    fun fetchUserLocation(view: View) {
-        fetchLocationPermission()
-        fetchLocationAndCep()
-    }
+
 }

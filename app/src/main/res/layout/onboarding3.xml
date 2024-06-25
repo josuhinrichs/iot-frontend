@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/open_sans"
-        android:text="Precisamos do seu endereço para obter informações climáticas"
+        android:text="Precisamos da sua permissão para obter sua localização"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/black"
@@ -68,7 +68,7 @@
         android:id="@+id/textView41"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="50dp"
         android:fontFamily="@font/poppins_bold"
         android:text="Vamos começar!"
         android:textColor="@color/black"
@@ -82,20 +82,18 @@
         android:id="@+id/searchLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="32dp"
         android:background="#00FFFFFF"
         android:backgroundTint="@color/secondary"
-        android:fontFamily="@font/open_sans"
-        android:text="Buscar localização"
+        android:fontFamily="@font/open_sans_bold"
+        android:onClick="fetchUserLocation"
+        android:text="Permitir"
         android:textColor="@color/secondary"
         android:textSize="16sp"
-        app:icon="@drawable/settings_24px"
         app:iconTint="@color/secondary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView27"
-        android:onClick="fetchUserLocation"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/textView27" />
 
     <TextView
         android:id="@+id/enderecoRua"
@@ -106,6 +104,7 @@
         android:text="Rua Gustavo Sampaio"
         android:textColor="@color/black"
         android:textSize="16sp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchLocation" />
@@ -118,6 +117,7 @@
         android:text="Parquelândia, Fortaleza - CE"
         android:textColor="@color/black"
         android:textSize="16sp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/enderecoRua" />
@@ -128,6 +128,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/sunny" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

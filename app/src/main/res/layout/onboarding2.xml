@@ -8,14 +8,23 @@
     android:backgroundTint="@color/primary">
 
     <ImageView
+        android:id="@+id/sun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/sunny" />
+
+    <ImageView
         android:id="@+id/imageView6"
         android:layout_width="246dp"
         android:layout_height="282dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="24dp"
         android:src="@drawable/guardachuvamulher"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/sun" />
 
     <Button
         android:id="@+id/btnContinuar"
@@ -50,7 +59,7 @@
         android:layout_width="367dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans"
-        android:text="Com o Climão, gerenciamos de forma inteligente o seu ambiente interno, ajustando-se automaticamente às condições de temperatura e umidade."
+        android:text="Com o Climasync, gerenciamos de forma inteligente o seu ambiente interno, ajustando-se automaticamente às condições de temperatura e umidade."
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/black"
