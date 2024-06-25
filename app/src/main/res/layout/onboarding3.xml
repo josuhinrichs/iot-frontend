@@ -13,10 +13,10 @@
         android:id="@+id/imageView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enderecoBairro"
+        app:layout_constraintTop_toBottomOf="@+id/searchLocation"
         app:srcCompat="@drawable/progress3" />
 
     <Button
@@ -24,14 +24,16 @@
         android:layout_width="150dp"
         android:layout_height="70dp"
         android:layout_marginTop="32dp"
-        android:backgroundTint="@color/secondary"
+        android:backgroundTint="#B0E2E2EC"
+        android:enabled="false"
         android:fontFamily="@font/open_sans"
+        android:onClick="completeOnboarding"
         android:text="Finalizar"
+        android:textColor="#A2A2A2"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView12"
-        android:onClick="completeOnboarding"/>
+        app:layout_constraintTop_toBottomOf="@+id/imageView12" />
 
     <Button
         android:id="@+id/btnVoltar"
@@ -83,44 +85,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:background="#00FFFFFF"
-        android:backgroundTint="@color/secondary"
+        android:backgroundTint="@color/white"
         android:fontFamily="@font/open_sans_bold"
         android:onClick="fetchUserLocation"
-        android:text="Permitir"
+        android:text="Autorizar acesso"
         android:textColor="@color/secondary"
         android:textSize="16sp"
         app:iconTint="@color/secondary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView27" />
-
-    <TextView
-        android:id="@+id/enderecoRua"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/open_sans"
-        android:text="Rua Gustavo Sampaio"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchLocation" />
-
-    <TextView
-        android:id="@+id/enderecoBairro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans"
-        android:text="Parquelândia, Fortaleza - CE"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enderecoRua" />
 
     <ImageView
         android:id="@+id/sun"

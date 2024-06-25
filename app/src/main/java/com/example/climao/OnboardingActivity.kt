@@ -13,6 +13,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.example.climao.databinding.ActivityOnboardingBinding
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -47,6 +48,10 @@ class OnboardingActivity : AppCompatActivity() {
 
     fun fetchUserLocation(view: View) {
         fetchLocationPermission()
+        val btnFinalizar: Button = findViewById(R.id.btnFinalizar)
+        btnFinalizar.isEnabled = true
+        btnFinalizar.backgroundTintList = ContextCompat.getColorStateList(this, R.color.secondary)
+        btnFinalizar.setTextColor(ContextCompat.getColor(this, R.color.white))
     }
 
     fun completeOnboarding(view: View) {

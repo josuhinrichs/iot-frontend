@@ -65,7 +65,6 @@ class MainActivity : AppCompatActivity() {
             // Start OnboardingActivity
             startActivity(Intent(this, OnboardingActivity::class.java))
             finish()
-            return
         }
 
         setContentView(binding.root)
