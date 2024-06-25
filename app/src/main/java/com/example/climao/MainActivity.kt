@@ -31,6 +31,10 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 import retrofit2.Retrofit
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 @kotlinx.serialization.ExperimentalSerializationApi
 class MainActivity : AppCompatActivity() {
@@ -183,7 +187,19 @@ class MainActivity : AppCompatActivity() {
                         // atualizar a última notificação
                         binding.tituloAlerta.text = user.titulo_alerta
                         binding.corpoAlerta.text = user.corpo_alerta
-                        binding.horaAlerta.text = user.timestamp_alerta
+
+                        //converter data da última notificação
+                        // Parse the input date string
+                        val zonedDateTime = ZonedDateTime.parse(user.timestamp_alerta).withZoneSameInstant(
+                            ZoneId.of("UTC-3"))
+
+                        // Define the desired output format
+                        val outputFormatter = DateTimeFormatter.ofPattern(
+                            "HH:mm dd/MM",
+                            Locale.getDefault())
+
+                        // Format the parsed date to the desired output format
+                        binding.horaAlerta.text = zonedDateTime.format(outputFormatter)
 
 
                     }
