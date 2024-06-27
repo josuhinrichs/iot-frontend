@@ -78,26 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:orientation="vertical"
-                android:paddingHorizontal="24dp">
-
-                <TextView
-                    android:id="@+id/endereco_rua"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans"
-                    android:text="Rua Gustavo Sampaio"
-                    android:textColor="@color/white"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/endereco"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans"
-                    android:text="Parquelândia, Fortaleza - CE"
-                    android:textColor="@color/white"
-                    android:textSize="16sp" />
-            </LinearLayout>
+                android:paddingHorizontal="24dp"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/dex_alerta_config_layout"

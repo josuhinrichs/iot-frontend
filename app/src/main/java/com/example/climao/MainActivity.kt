@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var backClient: BackClient
     private var pushToken: String? = null
-    private var deviceID: String = "eb0340f4dd318cdfbdo5ww"//"vdevo171874684507405"
+    private var deviceID: String = "vdevo171874684507405"//"vdevo171874684507405"
     private lateinit var user: User
 
     private val _nowTemperature = MutableLiveData<Int>(30)
@@ -330,12 +330,12 @@ class MainActivity : AppCompatActivity() {
 
                         //TODO: ajustar as cores
                         if(responseFormatted.isOnline){
-                            binding.ventiladorOnlineStatusText.text = "Online"
-                            //binding.ventiladorOnlineStatusText.setTextColor(ContextCompat.getColor(this, R.color.green))
+                            binding.ventiladorOnlineStatusText.setText("Online")
+                            binding.ventiladorOnlineStatusText.setTextColor(ContextCompat.getColor(binding.root.context, R.color.green))
 
                         }else{
-                            binding.ventiladorOnlineStatusText.text = "Offline"
-                            //binding.ventiladorOnlineStatusText.setTextColor(ContextCompat.getColor(this, R.color.light_gray))
+                            binding.ventiladorOnlineStatusText.setText("Offline")
+                            binding.ventiladorOnlineStatusText.setTextColor(ContextCompat.getColor(binding.root.context, R.color.terciary))
                         }
                     }
 
